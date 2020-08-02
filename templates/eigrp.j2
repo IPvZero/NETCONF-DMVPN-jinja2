@@ -1,0 +1,39 @@
+<config>
+    <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <router operation="replace">
+                        <eigrp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-eigrp">
+                        <id>{{ host.facts.eigrp.name }}</id>
+                                <address-family>
+                                        <type>ipv4</type>
+                                        <af-ip-list>
+                                                <unicast-multicast>unicast</unicast-multicast>
+                                                <autonomous-system>{{ host.facts.eigrp.as }}</autonomous-system>
+                                                {% if host.facts.eigrp.type == "HUB" %}
+                                                <af-interface>
+                                                        <name>Tunnel0</name>
+                                                        <split-horizon>false</split-horizon>
+                                                </af-interface>
+                                                {% endif %}
+                                                <eigrp>
+                                                <router-id>{{ host.facts.eigrp.rid }}</router-id>
+                                                {% if host.facts.eigrp.type == "SPOKE" %}
+                                                    <stub>
+                                                    <connected/>
+                                                    </stub>
+                                                    {% endif %}
+                                                </eigrp>
+                                                {% for n in host.facts.eigrp.networks %}
+                                                <network>
+                                                <number>{{ n.number }}</number>
+                                                <wild-card>{{ n.wildcard }}</wild-card>
+                                                </network>
+                                                {% endfor %}
+                                                <topology>
+                                                        <base/>
+                                                </topology>
+                                        </af-ip-list>
+                                </address-family>
+                        </eigrp>
+                </router>
+        </native>
+</config>
