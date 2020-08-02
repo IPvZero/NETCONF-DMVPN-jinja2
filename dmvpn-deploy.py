@@ -25,7 +25,7 @@ def config_nhrp(task):
     config_eigrp(task)
 
 def config_eigrp(task):
-    eigrp_template = task.run(task=template_file,name="Buildling EIGRP Configuration",template="e.j2", path="./templates")
+    eigrp_template = task.run(task=template_file,name="Buildling EIGRP Configuration",template="eigrp.j2", path="./templates")
     eigrp_output = eigrp_template.result
     task.run(task=netconf_edit_config, target="running", config=eigrp_output)
 
