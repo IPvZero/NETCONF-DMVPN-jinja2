@@ -10,7 +10,7 @@
                                                 <autonomous-system>{{ host.facts.eigrp.as }}</autonomous-system>
                                                 {% if host.facts.eigrp.type == "HUB" %}
                                                 <af-interface>
-                                                        <name>Tunnel0</name>
+                                                        <name>{{ host.facts.nhrp.tunnel_int }}</name>
                                                         <split-horizon>false</split-horizon>
                                                 </af-interface>
                                                 {% endif %}
