@@ -1,0 +1,33 @@
+hostname SPOKE1
+!
+vrf definition MGMT
+ !
+ address-family ipv4
+ exit-address-family
+!
+!
+netconf-yang
+!
+restconf
+!
+username john privilege 15 password 0 cisco
+!
+!
+!
+interface GigabitEthernet1
+ vrf forwarding MGMT
+ ip address 192.168.31.103 255.255.255.0
+ no shut
+!
+interface GigabitEthernet2
+ ip address 203.0.0.1 255.255.255.252
+ no shut
+!
+int loop10
+ ip add 10.3.3.1 255.255.255.0
+ no shut
+
+ip http server
+ip http authentication local
+ip http secure-server
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet2
