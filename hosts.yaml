@@ -1,0 +1,36 @@
+---
+R2:
+  hostname: 192.168.31.102
+  port: 830
+  username: john
+  password: cisco
+  platform: ios
+  connection_options:
+    netconf:
+        extras:
+            allow_agent: False
+            hostkey_verify: False
+
+R3:
+  hostname: 192.168.31.103
+  port: 830
+  username: john
+  password: cisco
+  platform: ios
+  connection_options:
+    netconf:
+        extras:
+            allow_agent: False
+            hostkey_verify: False
+
+R4:
+  hostname: 192.168.31.104
+  port: 830
+  username: john
+  password: cisco
+  platform: ios
+  connection_options:
+    netconf:
+        extras:
+            allow_agent: False
+            hostkey_verify: False
