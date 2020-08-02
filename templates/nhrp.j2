@@ -1,0 +1,51 @@
+<config>
+    <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+                <interface>
+                        <Tunnel operation="replace">
+                        <name>{{ host.facts.nhrp.tunnel_int }}</name>
+                                <ip>
+                                        <address>
+                                                <primary>
+                                                <address>{{ host.facts.nhrp.tunnel_ip }}</address>
+                                                <mask>{{ host.facts.nhrp.tunnel_mask }}</mask>
+                                                </primary>
+                                        </address>
+                                        {% if host.facts.eigrp.type == "HUB" %}
+                                        <redirects>false</redirects>
+                                        {% endif %}
+                                        <nhrp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-nhrp">
+                                        {% if host.facts.eigrp.type == "SPOKE" %}
+                                                <map>
+                                                        <dest-ipv4>
+                                                            <dest-ipv4>{{ host.facts.nhrp.hub.tun_ip }}</dest-ipv4>
+                                                                <nbma-ipv4>
+                                                                    <nbma-ipv4>{{ host.facts.nhrp.hub.global_ip }}</nbma-ipv4>
+                                                                </nbma-ipv4>
+                                                        </dest-ipv4>
+                                                        <multicast>
+                                                        <nbma_ipv4>{{ host.facts.nhrp.hub.global_ip }}</nbma_ipv4>
+                                                        </multicast>
+                                                </map>
+                                            {% endif %}
+                                            <network-id>{{ host.facts.nhrp.tunnel_id }}</network-id>
+                                            {% if host.facts.eigrp.type == "SPOKE" %}
+                                                <nhs>
+                                                        <ipv4>
+                                                        <ipv4>{{ host.facts.nhrp.hub.tun_ip }}</ipv4>
+                                                        </ipv4>
+                                                </nhs>
+                                            {% endif %}
+                                        </nhrp>
+                                </ip>
+                                <tunnel xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-tunnel">
+                                <source>{{ host.facts.nhrp.tunnel_source }}</source>
+                                        <mode>
+                                                <gre>
+                                                        <multipoint/>
+                                                </gre>
+                                        </mode>
+                                </tunnel>
+                        </Tunnel>
+                </interface>
+        </native>
+</config>
