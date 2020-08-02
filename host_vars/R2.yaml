@@ -1,0 +1,19 @@
+---
+ntp:
+  - server: 2.2.2.2
+
+eigrp:
+  name: "IPvZero"
+  as: "55"
+  rid: 2.2.2.2
+  type: "HUB"
+  networks:
+    - number: 172.16.1.0
+      wildcard: 0.0.0.255
+
+nhrp:
+  tunnel_int: "0"
+  tunnel_ip: 172.16.1.1
+  tunnel_mask: 255.255.255.0
+  tunnel_id: "5"
+  tunnel_source: "GigabitEthernet2"
